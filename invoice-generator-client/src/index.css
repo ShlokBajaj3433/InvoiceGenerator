@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist&display=swap');
+
+* {
+  font-family: 'Urbanist', sans-serif;
+}
+
+/* Set cursor pointer for clickable elements */
+button, [role="button"], .clickable {
+  cursor: pointer;
+}
+
+/* Keyframes for loader spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Shadows for InvoiceForm inputs, textarea, and select */
+.InvoiceForm input,
+.InvoiceForm textarea,
+.InvoiceForm select {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #e0e0e0;
+  transition: box-shadow 0.2s;
+}
+
+.InvoiceForm input:focus,
+.InvoiceForm textarea:focus,
+.InvoiceForm select:focus {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  outline: none;
+}
+
+/* Preview Page Styles */
+.previewpage {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.previewpage .btn {
+  min-width: 140px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: 6px;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+
+.previewpage .btn:active,
+.previewpage .btn:focus {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  outline: none;
+}
+
+.invoice-preview {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+  min-width: 320px;
+  min-height: 420px;
+  max-width: 900px;
+  width: 100%;
+  padding: 2rem 2.5rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.form-main-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+.form-section-heading {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #a2a2a2;
+  padding-bottom: 4px;
+  color: #333;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.btn-success {
+  font-weight: 500;
+  padding: 6px 16px;
+}
+
+textarea.form-control {
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  font-weight: 600;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .invoice-preview {
+    padding: 1rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .previewpage {
+    padding: 1rem 0.5rem;
+  }
+}

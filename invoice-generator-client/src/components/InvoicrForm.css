@@ -1,0 +1,14 @@
+.form-section-heading {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #ff6f00;
+  padding-bottom: 4px;
+  color: #222;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  display: block;
+}

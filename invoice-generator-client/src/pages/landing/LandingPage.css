@@ -1,0 +1,33 @@
+.landing-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #f8f9fa; 
+}
+
+.landing-title {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.landing-lead {
+  max-width: 700px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.landing-btn-group {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.landing-step-icon {
+  width: 70px;
+  height: 70px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.landing-step {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
