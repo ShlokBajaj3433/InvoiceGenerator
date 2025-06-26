@@ -1,9 +1,8 @@
-import './Template1.css';
 
 
-const Template1 = ({ data }) => {
+const Template4 = ({ data }) => {
     return (
-        <div className="template1 border rounded mx-auto my-4 px-sm-4 py-3 w-100">
+        <div className="Template4 border rounded mx-auto my-4 px-sm-4 py-3 w-100">
             {/* Invoice Header */}
             <div className="row mb-4">
                 <div className="col-md-6 mb-3 mb-md-0">
@@ -94,4 +93,4 @@ const Template1 = ({ data }) => {
     );
 };
 
-export default Template1;
+export default Template4;

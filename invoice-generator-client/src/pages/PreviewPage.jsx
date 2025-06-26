@@ -6,7 +6,7 @@ import InvoicePreview from '../components/InvoicePreview.jsx';
 
 function PreviewPage() {
   const previewRef = React.useRef(null);
-  const {selectedTemplate, InvoiceData}  = useContext(AppContext);
+  const {selectedTemplate, InvoiceData, SetSelectedTemplate}  = useContext(AppContext);
   return (
     <div className='container-fluid min-vh-100 p-3'>
       {/* Action buttons */}
@@ -14,12 +14,13 @@ function PreviewPage() {
 
           <div className='d-flex gap-2 flex-wrap justify-content-center'>
             {templates.map(({ id, label, img }) => (
-              <button
-                key={id}
-                className="btn btn-warning"
-              >
-                {label}
-              </button>
+            <button
+              key={id}
+              className={`btn ${selectedTemplate === id ? 'btn-warning' :'bg-warning-subtle' }`}
+              onClick={() => SetSelectedTemplate(id)}
+            >
+              {label}
+            </button>
             ))}
           </div>
 

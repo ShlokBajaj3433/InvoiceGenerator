@@ -1,0 +1,160 @@
+/* Make the invoice container A4 size and centered */
+.max-w-4xl {
+  max-width: 794px; /* A4 width in px at 96dpi */
+  width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+
+
+/* Make logo smaller and neater */
+.footer-logo {
+  max-height: 40px;
+  max-width: 120px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+  padding: 4px;
+}
+
+thead.bg-blue-600 th {
+  background: #4A044E !important;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .max-w-4xl {
+    max-width: 98vw;
+    padding: 0;
+  }
+  .p-8 {
+    padding: 16px !important;
+  }
+  table.min-w-full th, table.min-w-full td {
+    padding: 8px 8px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ...existing code... */
+
+/* Table improvements */
+table.min-w-full {
+  border-collapse: collapse; /* Use collapse for sharp borders */
+  width: 100%;
+  background: #fff;
+  table-layout: fixed; /* Ensures equal column widths */
+}
+
+table.min-w-full th, table.min-w-full td {
+  border: 1px solid #e5e7eb;
+  padding: 14px 10px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+table.min-w-full th {
+  background: #4A044E !important;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+table.min-w-full th:first-child,
+table.min-w-full td:first-child {
+  border-left: none;
+}
+
+table.min-w-full th:last-child,
+table.min-w-full td:last-child {
+  border-right: none;
+}
+
+table.min-w-full tr:last-child td {
+  border-bottom: none;
+}
+
+/* Remove extra border from the table container */
+.overflow-x-auto {
+  display: flex;
+  justify-content: center;
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  padding: 0;
+}
+
+/* ...existing code... */
+
+
+.overflow-x-auto {
+  display: flex;
+  justify-content: center;
+}
+
+.min-w-full {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.p-8 {
+  padding: 32px;
+}
+.mb-8 {
+  margin-bottom: 2rem !important;
+}
+.mb-6 {
+  margin-bottom: 1.5rem !important;
+}
+
+/* Button print/export tweaks */
+button {
+  font-size: 1rem;
+}
+
+/* Thank you and pay now section */
+@media print {
+  button, .bg-blue-500, .hover\:bg-blue-600 {
+    display: none !important;
+  }
+}
+
+/* Subtle border for totals */
+.border-t {
+  border-top: 1.5px solid #4A044E !important;
+}
+
+/* Make sure the invoice is always centered vertically */
+.min-h-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional: Remove blue background from table header if using Tailwind */
+.bg-blue-600 {
+  background: #4A044E !important;
+}
+
+/* Optional: Make the invoice title more prominent */
+.text-5xl {
+  font-size: 2.8rem !important;
+  letter-spacing: 2px;
+}
+
+/* Optional: Make the company name stand out */
+.font-extrabold {
+  font-weight: 800 !important;
+}

@@ -1,0 +1,122 @@
+/* General Layout */
+.template1 {
+  background: #fff;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 900px;
+  margin: auto;
+  border-radius: 8px;
+  padding: 24px;
+}
+/* Section Spacing */
+.template1 h1,
+.template1 h2,
+.template1 h4,
+.template1 h5 {
+  font-weight: 600;
+  color: #1f1f1f;
+}
+
+.template1 h1.invoice-title {
+  font-size: 2rem;
+  color: #444;
+  border-bottom: 2px solid #ff6f00;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+.template1 hr.orange-boarder {
+  border-top: 2px solid #ff6f00;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Company Info */
+.company-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2a2a2a;
+}
+
+.company-address,
+.company-phone {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Table Styling */
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+.table-bordered {
+  border: 1px solid #ccc;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-bordered th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  text-align: left;
+}
+.table thead,
+.table-light1 th {
+  background-color: #ff6f00 !important;
+  color: white !important;
+}
+/* Total Section */
+.template1 .text-end p,
+.template1 .text-end h4 {
+  margin: 0;
+  color: #000;
+}
+
+/* Bank and Notes */
+.template1 .mb-4 p {
+  margin: 4px 0;
+}
+
+/* Responsive Improvements */
+@media (max-width: 768px) {
+  .template1 {
+    padding: 1rem !important;
+  }
+
+  .template1 .text-md-end {
+    text-align: left !important;
+  }
+
+  .template1 .d-flex {
+    flex-direction: column !important;
+  }
+}
+
+
+@media print {
+  body {
+    background: none;
+  }
+
+  .template1 {
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .template1 hr.orange-boarder {
+    border-color: #ff6f00;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
