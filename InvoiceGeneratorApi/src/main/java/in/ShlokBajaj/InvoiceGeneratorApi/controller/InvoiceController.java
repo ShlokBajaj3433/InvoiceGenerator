@@ -40,22 +40,22 @@ public class InvoiceController {
         return ResponseEntity.ok(invoiceService.fetchInvoices());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteInvoice(@PathVariable String id){
-        invoiceService.deleteInvoice(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/SendInvoice")
+    @PostMapping("/sendInvoice")
+    @CrossOrigin(origins = "*") // Optional, but explicit
     public ResponseEntity<String> sendInvoice(@RequestPart("file") MultipartFile file, @RequestPart("email") String customerEmail) {
-        
         try {
             emailService.sendInvoiceEmail(customerEmail, file);
             return ResponseEntity.ok("Invoice sent successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error sending invoice: " + e.getMessage());
         }
-    } 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteInvoice(@PathVariable String id){
+        invoiceService.deleteInvoice(id);
+        return ResponseEntity.noContent().build();
+    }
     
     
 }

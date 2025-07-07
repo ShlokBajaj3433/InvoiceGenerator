@@ -23,17 +23,16 @@ public class EmailService {
     @Value("${spring.mail.properties.mail.smtp.from}")
     private String fromEmail;
 
-    public void sendInvoiceEmail(String toEmail, MultipartFile file)throws MessagingException, IOException{
-      
+        public void sendInvoiceEmail(String toEmail, MultipartFile file) throws MessagingException, IOException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
+    
         helper.setFrom(fromEmail);
         helper.setTo(toEmail);
         helper.setSubject("Invoice from Invoice Generator");
         helper.setText("Dear Customer,\n\nPlease find your invoice attached.\n\nThank you!\n\nInvoice Generator Team");
         helper.addAttachment(file.getOriginalFilename(), new ByteArrayResource(file.getBytes()));
-        
+    
         emailSender.send(message);
     }
 }

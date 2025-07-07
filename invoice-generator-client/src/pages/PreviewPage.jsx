@@ -120,28 +120,28 @@ function PreviewPage() {
     }
   }
 
-  const handelSendEmail = async () => {
+const handelSendEmail = async () => {
+  try {
+    setEmaling(true);
+    const pdfBlob = await generatePDFfromElement(previewRef.current, `invoice-${Date.now()}.pdf`, true);
+    const pdfFile = new File([pdfBlob], `invoice-${Date.now()}.pdf`, { type: "application/pdf" }); // <-- fix here
+    const formdata = new FormData();
+    formdata.append("file", pdfFile); // <-- use pdfFile
+    formdata.append("email", customerEmail);
 
-    try{
-      setEmaling(true)
-     const pdfBlob = await generatePDFfromElement(previewRef.current, `invoice-${Date.now()}.pdf`, true)
-     const formdata = new FormData()
-     formdata.append("file", pdfBlob)
-     formdata.append("email", customerEmail)
-    
-     const response = sendInvoice(baseURL,formdata)
-     if(response.status === 200){
+    const response = await sendInvoice(baseURL, formdata);
+    if (response.status === 200) {
       toast.success("Invoice sent successfully.");
       setShowModal(false);
-     }else{
+    } else {
       toast.error("Failed to send invoice. Try again.");
-     }
-    }catch(error){
-      toast.error("An error occurred while sending the invoice.");
-    }finally{
-      setEmaling(false);
     }
+  } catch (error) {
+    toast.error("An error occurred while sending the invoice.");
+  } finally {
+    setEmaling(false);
   }
+}
      
   return (
     <div className='container-fluid min-vh-100 p-3'>
@@ -170,7 +170,7 @@ function PreviewPage() {
           {InvoiceData.id &&<button className="btn btn-danger"
           onClick={handleDelete}
           >Delete Invoice</button>}
-          <button className="btn btn-secondary">Back to Dashboard</button>
+          <button className="btn btn-secondary" onClick={() => navigate("/dashboard")}>Back to Dashboard</button>
           <button className="btn btn-info" onClick={()=> {setShowModal(true)}}>Send Email</button>
           <button className="btn btn-success d-flex align-items-center justify-content-center"
           onClick={handleDownloadPDF}

@@ -24,8 +24,8 @@ const Template1 = ({ data }) => {
                     )}
                     <h2 className="mb-1 company-title">{data.company?.name || "Company Name"}</h2>
                     <p className="mb-1 company-address">{data.company?.address || "Company Address"}</p>
-                    <p className="mb-1 company-phone">Phone: {data.company?.phone }</p>
-                    <p className="mb-1 company-email">Email: {data.company?.email }</p>
+                    {data.company?.phone && <p className="mb-1 company-phone">Phone: {data.company.phone}</p>}
+                    {data.company?.email && <p className="mb-1 company-email">Email: {data.company.email}</p>}
                 </div>
 
                 <div className="col-md-6 text-start text-md-end">
@@ -45,15 +45,15 @@ const Template1 = ({ data }) => {
                     <h5 className='mb-2'>Billing Information</h5>
                     <p className="mb-1"><strong>Name:</strong> {data.billing?.name }</p>
                     <p className="mb-1"><strong>Address:</strong> {data.billing?.address }</p>
-                    <p className="mb-1"><strong>Phone:</strong> {data.billing?.phone }</p>
-                    <p className="mb-1"><strong>Email:</strong> {data.billing?.email }</p>
+                    {data.billing?.phone && <p className="mb-1"><strong>Phone:</strong> {data.billing.phone}</p>}
+                    {data.billing?.email && <p className="mb-1"><strong>Email:</strong> {data.billing.email}</p>}
                 </div>
                 <div className="col-md-6 text-start text-md-end">
                     <h5 className='mb-2'>Shipping Information</h5>
                     <p className="mb-1"><strong>Name:</strong> {data.shipping?.name }</p>
                     <p className="mb-1"><strong>Address:</strong> {data.shipping?.address }</p>
-                    <p className="mb-1"><strong>Phone:</strong> {data.shipping?.phone }</p>
-                    <p className="mb-1"><strong>Email:</strong> {data.shipping?.email }</p>
+                    {data.shipping?.phone && <p className="mb-1"><strong>Phone:</strong> {data.shipping.phone}</p>}
+                    {data.shipping?.email && <p className="mb-1"><strong>Email:</strong> {data.shipping.email}</p>}
                 </div>
             </div>
 
