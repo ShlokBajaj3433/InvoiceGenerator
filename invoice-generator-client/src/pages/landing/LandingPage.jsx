@@ -1,6 +1,6 @@
 import React from 'react';
 import './LandingPage.css';
-
+import { Link } from 'react-router-dom';
 const LandingPage = () => {
   return (
     <>
@@ -21,9 +21,11 @@ const LandingPage = () => {
           </p>
 
           <div className="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3 mb-5 landing-btn-group">
+           <Link to="/generate" className="text-decoration-none">
             <button className="btn btn-primary btn-lg px-4">
               Start Creating Invoices
             </button>
+           </Link>
           </div>
 
           <div className="d-flex justify-content-center landing-step"></div>
@@ -39,7 +41,7 @@ const LandingPage = () => {
                 <div className="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3 landing-step-icon">
                   1
                 </div>
-                <h5 className="fw-bold mb-2">Enter Details</h5>
+                <h5 className="fw-bold mb-2">Enter details</h5>
                 <p className="text-secondary mb-0" style={{ fontSize: 15 }}>
                   Quickly fill in your client’s information, item descriptions, quantities, and prices. Our intuitive form makes it a breeze.
                 </p>

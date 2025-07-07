@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
 import MenuBar from './components/MenuBar';
 import Footer from './components/Footer';
 import LandingPage from './pages/landing/LandingPage';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/dashboard';
 import MainPage from './pages/MainPage';
 import PreviewPage from './pages/PreviewPage';
 import { Toaster } from 'react-hot-toast';

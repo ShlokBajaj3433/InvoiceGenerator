@@ -6,16 +6,16 @@ import TempleteGrid from '../components/TempleteGrid.jsx';
 import { useNavigate } from 'react-router-dom';
 
 function MainPage() {
-  const [IsEditingTitle, setIsEditingTitle] = useState(false)
-  const { InvoiceTitle, setInvoiceTitle,InvoiceData, setInvoiceData,  SetSelectedTemplate } = useContext(AppContext)
+  const [IsEditingtitle, setIsEditingtitle] = useState(false)
+  const { Invoicetitle, setInvoicetitle,InvoiceData, setInvoiceData,  Settemplate } = useContext(AppContext)
   const formRef = useRef(null);
   const [formHeight, setFormHeight] = useState(0);
   const navigate = useNavigate();
 
 
   const handleTemplateChange = (templateId) => {
-    const hasEmptyFields = InvoiceData.Items.some(
-      (item) => !item.Qty || !item.Price 
+    const hasEmptyFields = InvoiceData.items.some(
+      (item) => !item.quantity || !item.price 
     );
 
     if (hasEmptyFields) {
@@ -24,8 +24,7 @@ function MainPage() {
       // toast.error('Fill all item fields before changing template.');
       return;
     }
-
-    SetSelectedTemplate(templateId);
+    Settemplate(templateId);
     navigate(`/Preview`);
     
   }
@@ -37,18 +36,18 @@ function MainPage() {
     }
   });
 
-  const handleTitleChange = (e) => {
-    setInvoiceTitle(e.target.value)
+  const handletitleChange = (e) => {
+    setInvoicetitle(e.target.value)
     setInvoiceData((prevData) => ({
       ...prevData,
       title: e.target.value
     }))
   }
   const handleEditClick = () => {
-    setIsEditingTitle(true)
+    setIsEditingtitle(true)
   }
-  const handleTitleBlur = () => {
-    setIsEditingTitle(false)
+  const handletitleBlur = () => {
+    setIsEditingtitle(false)
   }
 
   return (
@@ -56,19 +55,19 @@ function MainPage() {
       <div className="container">
         <div className="bg-white border rounded shadow-sm p-2 mb-4 mt-4">
           <div className="d-flex align-items-center">
-            {IsEditingTitle ? (
+            {IsEditingtitle ? (
               <input
                 type="text"
                 className="form-control form-control-sm border-0 p-0 bg-transparent fw-bold autofocus "
                 style={{ fontSize: '1rem' }}
-                onBlur={handleTitleBlur}
-                onChange={handleTitleChange}
-                value={InvoiceTitle}
+                onBlur={handletitleBlur}
+                onChange={handletitleChange}
+                value={Invoicetitle}
                 autoFocus
               />
             ) : (
               <>
-                <h3 className='mb-0 me-2 p-3'> {InvoiceTitle} </h3>
+                <h3 className='mb-0 me-2 p-3'> {Invoicetitle} </h3>
                 <button
                   className='btn btn-link text-dark p-0 '
                   onClick={handleEditClick}

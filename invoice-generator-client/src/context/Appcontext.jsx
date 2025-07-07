@@ -5,64 +5,68 @@ import { useState } from 'react';
 export const AppContext = createContext();
 
 const InitialInvoiceData = {
-  Title: "New Invoice",
-  Billing: {
-    Name: "",
-    Phone: "",
-    Email: "",
-    Address: "",
+  title: "Invoice",
+  billing: {
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
   },
-  Shipping: {
-    Name: "",
-    Phone: "",
-    Email: "",
-    Address: "",
+  shipping: {
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
   },
-  Invoice: {
-    Number: "",
-    Date: new Date().toISOString().split('T')[0],
-    DueDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0],
+  invoice: {
+    number: "",
+    date: new Date().toISOString().split('T')[0],
+    dueDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0],
+    paymentDate: "",
   },
-  Account: {
-    AccountName: "",
-    AccountNumber: "",
-    IfscCode: "",
+  account: {
+    accountName: "",
+    accountNumber: "",
+    ifscCode: "",
   },
-  Company: {
-    Name: "",
-    Address: "",
-    Phone: "",
-    Email: "",
+  company: {
+    name: "",
+    address: "",
+    phone: "",
+    email: "",
   },
-  Tax: 0,
-  Notes: "",
-
-  Items: [
+  tax: 0,
+  notes: "",
+  items: [
     {
-      Name: "",
-      Description: "",
-      Qty: 1,
-      Price: 0,
-      Total: 0,
+      name: "",
+      description: "",
+      quantity: 1,
+      price: 0,
+      total: 0,
     },
   ],
-  logo: null
-
+  logo: null,
+  template: "template1",
+  thumbnailUrl: ""
 }
 
 function AppcontextProvider({ children }) {
-    const [InvoiceTitle, setInvoiceTitle] = useState("New Invoice")
+    const [Invoicetitle, setInvoicetitle] = useState("Invoice")
     const [InvoiceData, setInvoiceData] = useState(InitialInvoiceData);
-    const [selectedTemplate,SetSelectedTemplate] = useState("template1");
+    const [template,Settemplate] = useState("template1");
     
+    const baseURL = "http://localhost:8080/api";
+
     const contextvalue = {
-        InvoiceTitle,
-        setInvoiceTitle,
+        Invoicetitle,
+        setInvoicetitle,
         InvoiceData,
         setInvoiceData,
-        selectedTemplate,
-        SetSelectedTemplate,
+        template,
+        Settemplate,
         InitialInvoiceData,
+        baseURL
     }
 
   return (
@@ -73,3 +77,4 @@ function AppcontextProvider({ children }) {
 }
 
 export default AppcontextProvider;
+export { InitialInvoiceData };

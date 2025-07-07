@@ -3,6 +3,8 @@ import Template2 from './../templates/Template2/Template2';
 import Template3 from "../templates/Template3/Template3";
 import Template4 from "../templates/Template4/Template4";
 import Template5 from "../templates/Template5/Template5";
+import Template6 from "../templates/Template6/Template6";
+
 
 
 export const TemplatesComponents = {
@@ -11,5 +13,6 @@ export const TemplatesComponents = {
   template3 :Template3,
   template4 :Template4,
   template5 :Template5,
+  template6 :Template6,
 }
 

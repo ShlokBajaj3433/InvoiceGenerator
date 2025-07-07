@@ -8,7 +8,7 @@ const InvoicePreview = forwardRef(({InvoiceData,template}, ref) => {
 
     return (
         <div className="invoice-preview container px-2 py-2 overflow-x-auto" ref={ref} >
-        <SelectTemplate data={formatedData}  />
+        <SelectTemplate data={InvoiceData}  />
     </div>
   )
 })

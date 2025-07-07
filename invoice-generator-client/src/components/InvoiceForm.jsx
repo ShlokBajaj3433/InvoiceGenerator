@@ -10,13 +10,13 @@ function InvoiceForm() {
   const additem = () => {
     setInvoiceData((prev) => ({
       ...prev,
-      Items: [...prev.Items, { Name: "", Description: "", Qty: 1, Price: 0, Total: 0 }]
+      items: [...prev.items, { name: "", description: "", quantity: 1, price: 0, total: 0 }]
     }));
   };
 
   const deleteItem = (index) => {
-    const items = InvoiceData.Items.filter((_, i) => i !== index);
-    setInvoiceData((prev) => ({ ...prev, Items: items }));
+    const items = InvoiceData.items.filter((_, i) => i !== index);
+    setInvoiceData((prev) => ({ ...prev, items: items }));
   };
 
   const handleChange = (section, field, value) => {
@@ -30,37 +30,37 @@ function InvoiceForm() {
   };
 
   const handleItemChange = (index, field, value) => {
-    const items = [...InvoiceData.Items];
+    const items = [...InvoiceData.items];
     items[index][field] = value;
-    if (field === "Qty" || field === "Price") {
-      items[index].Total = (Number(items[index].Qty) || 0) * (Number(items[index].Price) || 0);
+    if (field === "quantity" || field === "price") {
+      items[index].total = (Number(items[index].quantity) || 0) * (Number(items[index].price) || 0);
     }
-    setInvoiceData((prev) => ({ ...prev, Items: items }));
+    setInvoiceData((prev) => ({ ...prev, items: items }));
   };
 
-  const calculateTotal = () => {
-    const items = InvoiceData.Items.map(item => {
-      const qty = Number(item.Qty) || 0;
-      const price = Number(item.Price) || 0;
+  const calculatetotal = () => {
+    const items = InvoiceData.items.map(item => {
+      const qty = Number(item.quantity) || 0;
+      const price = Number(item.price) || 0;
       return {
         ...item,
-        Total: qty * price
+        total: qty * price
       };
     });
 
-    const SubTotal = items.reduce((sum, item) => sum + (item.Total || 0), 0);
-    const taxRate = Number(InvoiceData.Tax) || 0;
-    const taxAmount = (SubTotal * taxRate) / 100;
-    const grandTotal = SubTotal + taxAmount;
+    const Subtotal = items.reduce((sum, item) => sum + (item.total || 0), 0);
+    const taxRate = Number(InvoiceData.tax) || 0;
+    const taxAmount = (Subtotal * taxRate) / 100;
+    const grandtotal = Subtotal + taxAmount;
 
-    if (JSON.stringify(items) !== JSON.stringify(InvoiceData.Items)) {
-      setInvoiceData(prev => ({ ...prev, Items: items }));
+    if (JSON.stringify(items) !== JSON.stringify(InvoiceData.items)) {
+      setInvoiceData(prev => ({ ...prev, items: items }));
     }
 
-    return { SubTotal, taxAmount, grandTotal };
+    return { Subtotal, taxAmount, grandtotal };
   };
 
-  const { SubTotal, taxAmount, grandTotal } = calculateTotal();
+  const { Subtotal, taxAmount, grandtotal } = calculatetotal();
 
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -77,25 +77,19 @@ function InvoiceForm() {
   };
 
   useEffect(() => {
-    if (!InvoiceData.Invoice.Number) {
+    if (!InvoiceData.invoice.number) {
       const newInvoiceNumber = `INV-${Date.now()}`;
       setInvoiceData((prev) => ({
         ...prev,
-        Invoice: { ...prev.Invoice, Number: newInvoiceNumber }
+        invoice: { ...prev.invoice, number: newInvoiceNumber }
       }));
     }
   }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(InvoiceData);
-  };
 
   return (
     <form className="invoiceform container py-4">
       <h2 className="form-main-heading text-center mb-4">Invoice Form</h2>
 
-      {/* Company Logo */}
       <div className="mb-4">
         <h4 className="form-section-heading">Company Logo</h4>
         <div className="d-flex align-items-center gap-3">
@@ -106,45 +100,48 @@ function InvoiceForm() {
         </div>
       </div>
 
-      {/* Company Info */}
       <div className="mb-4">
         <h4 className="form-section-heading">Company Information</h4>
         <div className="row g-3">
           <div className="col-md-6">
-            <label className="form-label">Company Name</label>
-            <input className="form-control" placeholder="Company Name" value={InvoiceData.Company.Name} onChange={(e) => handleChange("Company", "Name", e.target.value)} />
+            <label className="form-label">Company name</label>
+            <input className="form-control" placeholder="Company name" value={InvoiceData.company.name} onChange={(e) => handleChange("company", "name", e.target.value)} />
           </div>
           <div className="col-md-6">
-            <label className="form-label">Company Phone</label>
-            <input className="form-control" placeholder="e.g., +91 99999 99999" value={InvoiceData.Company.Phone} onChange={(e) => handleChange("Company", "Phone", e.target.value)} />
+            <label className="form-label">Company phone</label>
+            <input className="form-control" placeholder="e.g., +91 99999 99999" value={InvoiceData.company.phone} onChange={(e) => handleChange("company", "phone", e.target.value)} />
           </div>
           <div className="col-12">
             <label className="form-label">Company Address</label>
-            <input className="form-control" placeholder="Street, City, ZIP" value={InvoiceData.Company.Address} onChange={(e) => handleChange("Company", "Address", e.target.value)} />
+            <input className="form-control" placeholder="Street, City, ZIP" value={InvoiceData.company.address} onChange={(e) => handleChange("company", "address", e.target.value)} />
           </div>
         </div>
       </div>
 
-      {/* Billing */}
+      {/* Bill To */}
       <div className="mb-4">
         <h4 className="form-section-heading">Bill To</h4>
         <div className="row g-3">
           <div className="col-md-6">
-            <label className="form-label">Billing Name</label>
-            <input className="form-control" value={InvoiceData.Billing.Name} onChange={(e) => handleChange("Billing", "Name", e.target.value)} />
+            <label className="form-label">Billing name</label>
+            <input className="form-control" value={InvoiceData.billing.name} onChange={(e) => handleChange("billing", "name", e.target.value)} />
           </div>
           <div className="col-md-6">
             <label className="form-label">Billing Phone</label>
-            <input className="form-control" value={InvoiceData.Billing.Phone} onChange={(e) => handleChange("Billing", "Phone", e.target.value)} />
+            <input className="form-control" value={InvoiceData.billing.phone} onChange={(e) => handleChange("billing", "phone", e.target.value)} />
           </div>
           <div className="col-12">
-            <label className="form-label">Billing Address</label>
-            <input className="form-control" value={InvoiceData.Billing.Address} onChange={(e) => handleChange("Billing", "Address", e.target.value)} />
+            <label className="form-label">Billing address</label>
+            <input className="form-control" value={InvoiceData.billing.address} onChange={(e) => handleChange("billing", "address", e.target.value)} />
+          </div>
+          <div className="col-12">
+            <label className="form-label">Billing Email</label>
+            <input className="form-control" placeholder="Email" value={InvoiceData.billing.email || ""} onChange={(e) => handleChange("billing", "email", e.target.value)} />
           </div>
         </div>
       </div>
-
-      {/* Shipping */}
+      
+      {/* Ship To */}
       <div className="mb-4">
         <h4 className="form-section-heading">Ship To</h4>
         <div className="d-flex align-items-center mb-2">
@@ -152,7 +149,7 @@ function InvoiceForm() {
             if (e.target.checked) {
               setInvoiceData((prev) => ({
                 ...prev,
-                Shipping: { ...prev.Billing }
+                shipping: { ...prev.billing }
               }));
             }
           }} />
@@ -160,142 +157,121 @@ function InvoiceForm() {
         </div>
         <div className="row g-3">
           <div className="col-md-6">
-            <label className="form-label">Shipping Name</label>
-            <input className="form-control" value={InvoiceData.Shipping.Name} onChange={(e) => handleChange("Shipping", "Name", e.target.value)} />
+            <label className="form-label">Shipping name</label>
+            <input className="form-control" value={InvoiceData.shipping.name} onChange={(e) => handleChange("shipping", "name", e.target.value)} />
           </div>
           <div className="col-md-6">
-            <label className="form-label">Shipping Phone</label>
-            <input className="form-control" value={InvoiceData.Shipping.Phone} onChange={(e) => handleChange("Shipping", "Phone", e.target.value)} />
+            <label className="form-label">Shipping phone</label>
+            <input className="form-control" value={InvoiceData.shipping.phone} onChange={(e) => handleChange("shipping", "phone", e.target.value)} />
           </div>
           <div className="col-12">
-            <label className="form-label">Shipping Address</label>
-            <input className="form-control" value={InvoiceData.Shipping.Address} onChange={(e) => handleChange("Shipping", "Address", e.target.value)} />
+            <label className="form-label">Shipping address</label>
+            <input className="form-control" value={InvoiceData.shipping.address} onChange={(e) => handleChange("shipping", "address", e.target.value)} />
+          </div>
+          <div className="col-12">
+            <label className="form-label">Shipping Email</label>
+            <input className="form-control" placeholder="Email" value={InvoiceData.shipping.email || ""} onChange={(e) => handleChange("shipping", "email", e.target.value)} />
           </div>
         </div>
       </div>
 
-      {/* Invoice Details */}
       <div className="mb-4">
         <h4 className="form-section-heading">Invoice Information</h4>
         <div className="row g-3">
           <div className="col-md-12">
-            <label className="form-label">Invoice Number</label>
-            <input className="form-control" disabled value={InvoiceData.Invoice.Number} />
+            <label className="form-label">Invoice number</label>
+            <input className="form-control" disabled value={InvoiceData.invoice.number} />
           </div>
           <div className="col-md-4">
             <label className="form-label">Invoice Date</label>
-            <input className="form-control" type="date" value={InvoiceData.Invoice.Date} onChange={(e) => handleChange("Invoice", "Date", e.target.value)} />
+            <input className="form-control" type="date" value={InvoiceData.invoice.date} onChange={(e) => handleChange("invoice", "date", e.target.value)} />
           </div>
           <div className="col-md-4">
             <label className="form-label">Due Date</label>
-            <input className="form-control" type="date" value={InvoiceData.Invoice.DueDate} onChange={(e) => handleChange("Invoice", "DueDate", e.target.value)} />
+            <input className="form-control" type="date" value={InvoiceData.invoice.dueDate} onChange={(e) => handleChange("invoice", "dueDate", e.target.value)} />
           </div>
           <div className="col-md-4">
             <label className="form-label">Payment Date</label>
-            <input className="form-control" type="date" value={InvoiceData.Invoice.paymentDate} onChange={(e) => handleChange("Invoice", "paymentDate", e.target.value)} />
+            <input className="form-control" type="date" value={InvoiceData.invoice.paymentDate} onChange={(e) => handleChange("invoice", "paymentDate", e.target.value)} />
           </div>
         </div>
       </div>
 
-      {/* Item Details */}
+{/* Items Section */}
 <div className="mb-4">
   <h4 className="form-section-heading">Item Details</h4>
-  {InvoiceData.Items.map((Item, index) => (
-    <div className="border rounded p-3 mb-3" key={index}>
-      <div className="row g-3 mb-2">
+  {InvoiceData.items.map((item, index) => (
+    <div key={index} className="mb-3 border rounded p-3">
+      <div className="row g-2">
         <div className="col-md-4">
-          <label className="form-label">Item Name</label>
-          <input className="form-control" value={Item.Name} placeholder="e.g., Item" onChange={(e) => handleItemChange(index, "Name", e.target.value)} />
+          <input className="form-control" placeholder="Item Name" value={item.name} onChange={(e) => handleItemChange(index, "name", e.target.value)} />
         </div>
         <div className="col-md-2">
-          <label className="form-label">Quantity</label>
-          <input className="form-control" type="number" value={Item.Qty} placeholder="e.g., 2" onChange={(e) => handleItemChange(index, "Qty", e.target.value)} />
+          <input className="form-control" placeholder="Qty" type="number" value={item.quantity} onChange={(e) => handleItemChange(index, "quantity", e.target.value)} />
         </div>
         <div className="col-md-3">
-          <label className="form-label">Price</label>
-          <input className="form-control" type="number" value={Item.Price} placeholder="e.g., 500" onChange={(e) => handleItemChange(index, "Price", e.target.value)} />
+          <input className="form-control" placeholder="Price" type="number" value={item.price} onChange={(e) => handleItemChange(index, "price", e.target.value)} />
         </div>
         <div className="col-md-3">
-          <label className="form-label">Total</label>
-          <input className="form-control" type="number" value={Item.Total} disabled />
+          <input className="form-control" placeholder="Total" type="number" value={item.total} disabled />
         </div>
       </div>
-      <label className="form-label">Description</label>
-      <div className="d-flex gap-3">
-        <textarea
-          className="form-control"
-          placeholder="Item description..."
-          style={{ resize: 'vertical', minHeight: '60px' }}
-          value={Item.Description}
-          onChange={(e) => handleItemChange(index, "Description", e.target.value)}
-        />
-        {InvoiceData.Items.length > 1 && (
-          <button type="button" className="btn btn-outline-danger" onClick={() => deleteItem(index)}>
-            <Trash />
-          </button>
-        )}
-      </div>
+      <textarea className="form-control mt-2" placeholder="Description" value={item.description} onChange={(e) => handleItemChange(index, "description", e.target.value)} />
+      {InvoiceData.items.length > 1 && (
+        <button type="button" className="btn btn-sm btn-danger mt-2" onClick={() => deleteItem(index)}>Remove Item</button>
+      )}
     </div>
   ))}
-  <button type="button" className="btn btn-success" onClick={additem}>+ Add Item</button>
-</div>
-
-{/* Bank Account Info */}
-<div className="mb-4">
-  <h4 className="form-section-heading">Bank Account Details</h4>
-  <div className="row g-3">
-    <div className="col-md-4">
-      <label className="form-label">Account Name</label>
-      <input className="form-control" placeholder="Account Name" onChange={(e) => handleChange("Account", "AccountName", e.target.value)} value={InvoiceData.Account.AccountName} />
-    </div>
-    <div className="col-md-4">
-      <label className="form-label">Account Number</label>
-      <input className="form-control" placeholder="000000000 " onChange={(e) => handleChange("Account", "AccountNumber", e.target.value)} value={InvoiceData.Account.AccountNumber} />
-    </div>
-    <div className="col-md-4">
-      <label className="form-label">IFSC Code</label>
-      <input className="form-control" placeholder="e.g. - SBIN0001234" onChange={(e) => handleChange("Account", "IfscCode", e.target.value)} value={InvoiceData.Account.IfscCode} />
-    </div>
-  </div>
+  <button type="button" className="btn btn-success" onClick={additem}>Add Item</button>
 </div>
 
 {/* Totals Section */}
 <div className="mb-4">
   <h4 className="form-section-heading">Totals</h4>
+  <div className="d-flex justify-content-between">
+    <div>Subtotal:</div>
+    <div>₹{Subtotal.toFixed(2)}</div>
+  </div>
+  <div className="d-flex justify-content-between">
+    <div>Tax Rate (%):</div>
+    <input className="form-control w-25" type="number" value={InvoiceData.tax} onChange={(e) => setInvoiceData(prev => ({ ...prev, tax: e.target.value }))} />
+  </div>
+  <div className="d-flex justify-content-between">
+    <div>Tax Amount:</div>
+    <div>₹{taxAmount.toFixed(2)}</div>
+  </div>
+  <div className="d-flex justify-content-between fw-bold">
+    <div>Grand Total:</div>
+    <div>₹{grandtotal.toFixed(2)}</div>
+  </div>
+</div>
+
+
+{/* Bank Account Details */}
+<div className="mb-4">
+  <h4 className="form-section-heading">Bank Account Details</h4>
   <div className="row g-3">
-    <div className="col-md-6">
-      <div className="d-flex justify-content-between">
-        <span>Subtotal:</span>
-        <span><strong>₹{SubTotal.toFixed(2)}</strong></span>
-      </div>
+    <div className="col-12">
+      <label className="form-label">Account Name</label>
+      <input className="form-control" placeholder="Account Name" value={InvoiceData.account.accountName} onChange={(e) => handleChange("account", "accountName", e.target.value)} />
     </div>
     <div className="col-md-6">
-      <div className="d-flex justify-content-between align-items-center">
-        <label className="form-label m-0">Tax Rate (%)</label>
-        <input className="form-control w-25 ms-2" type="number" value={InvoiceData.Tax} onChange={(e) => setInvoiceData((prev) => ({ ...prev, Tax: e.target.value }))} />
-      </div>
+      <label className="form-label">Account Number</label>
+      <input className="form-control" placeholder="Account Number" value={InvoiceData.account.accountNumber} onChange={(e) => handleChange("account", "accountNumber", e.target.value)} />
     </div>
-    <div className="col-md-6 mt-2">
-      <div className="d-flex justify-content-between">
-        <span>Tax Amount:</span>
-        <span><strong>₹{taxAmount.toFixed(2)}</strong></span>
-      </div>
-    </div>
-    <div className="col-md-6 mt-2">
-      <div className="d-flex justify-content-between">
-        <span>Grand Total:</span>
-        <strong>₹{grandTotal.toFixed(2)}</strong>
-      </div>
+    <div className="col-md-6">
+      <label className="form-label">IFSC Code</label>
+      <input className="form-control" placeholder="IFSC Code" value={InvoiceData.account.ifscCode} onChange={(e) => handleChange("account", "ifscCode", e.target.value)} />
     </div>
   </div>
 </div>
 
+
 {/* Notes Section */}
 <div className="mb-4">
-  <h4 className="form-section-heading">Additional Notes</h4>
-  <textarea className="form-control" rows="3" placeholder="Any special notes or instructions..." onChange={(e) => setInvoiceData((prev) => ({ ...prev, Notes: e.target.value }))} value={InvoiceData.Notes}></textarea>
+  <h4 className="form-section-heading">Notes</h4>
+  <textarea className="form-control" rows="3" placeholder="Additional notes..." value={InvoiceData.notes} onChange={(e) => setInvoiceData(prev => ({ ...prev, notes: e.target.value }))}></textarea>
 </div>
-
     </form>
   );
 }

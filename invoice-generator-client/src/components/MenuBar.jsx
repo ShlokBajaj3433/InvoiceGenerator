@@ -42,9 +42,9 @@ function MenuBar() {
               </Link>
             </li>
             <li className='nav-item'>
-              <button className='nav-link fw-medium' >
-                Generate
-              </button>
+              <Link className='nav-link' to='/Generate'>
+                Generate Invoice
+              </Link>
             </li>
 
             <li className='nav-item '>

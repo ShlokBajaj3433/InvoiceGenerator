@@ -1,56 +1,68 @@
 function formatInvoiceData(InvoiceData) {
     const {
-        title,
+        title = "",
         Company = {},
         Invoice = {},
         Account = {},
         Billing = {},
         Shipping = {},
-        Tax = 0,
-        Notes = "",
-        Items = [],
+        tax = 0,
+        notes = "",
+        items = [],
         logo = ""
     } = InvoiceData || {};
 
     const currencySymbol = "₹";
-    // Map Items to the format expected by the template
-    const items = (Array.isArray(Items) ? Items : []).map(item => ({
-        description: item.Description || item.Name || "",
-        Qty: Number(item.Qty) || 0,
-        Price: Number(item.Price) || 0,
+    // Map items to the format expected by the template
+    const formattedItems = (Array.isArray(items) ? items : []).map(item => ({
+        description: item?.description || item?.name || "",
+        quantity: Number(item?.quantity) || 0,
+        price: Number(item?.price) || 0,
     }));
 
-    const subtotal = items.reduce((acc, item) => acc + (item.Qty * item.Price), 0);
-    const taxAmount = subtotal * (Number(Tax) / 100);
+    const subtotal = formattedItems.reduce((acc, item) => acc + (item.quantity * item.price), 0);
+    const taxAmount = subtotal * (Number(tax) / 100);
     const total = subtotal + taxAmount;
 
     return {
         title,
-        companyName: Company.Name,
-        companyAddress: Company.Address,
-        companyPhone: Company.Phone,
+        companyName: Company.name || "",
+        companyAddress: Company.address || "",
+        companyPhone: Company.phone || "",
         companyLogo: logo,
-        invoiceNumber: Invoice.Number,
-        invoiceDate: Invoice.Date,
-        dueDate: Invoice.DueDate,
-        paymentDate: Invoice.paymentDate,
-        accountName: Account.AccountName,
-        accountNumber: Account.AccountNumber,
-        accountIfsc: Account.IfscCode,
-        billingName: Billing.Name,
-        billingAddress: Billing.Address,
-        billingPhone: Billing.Phone,
-        shippingName: Shipping.Name,
-        shippingAddress: Shipping.Address,
-        shippingPhone: Shipping.Phone,
+        invoiceNumber: Invoice.number || "",
+        invoiceDate: Invoice.date || "",
+        dueDate: Invoice.dueDate || "",
+        paymentDate: Invoice.paymentDate || "",
+        accountName: Account.AccountName || Account.accountName || "",
+        accountNumber: Account.AccountNumber || Account.accountNumber || "",
+        accountIfsc: Account.IfscCode || Account.ifscCode || "",
+        billingName: Billing.name || "",
+        billingAddress: Billing.address || "",
+        billingPhone: Billing.phone || "",
+        shippingName: Shipping.name || "",
+        shippingAddress: Shipping.address || "",
+        shippingPhone: Shipping.phone || "",
         currencySymbol,
-        tax: Tax,
-        items,
-        notes: { content: Notes },
+        tax: Number(tax) || 0,
+        items: formattedItems,
+        notes,
         subtotal,
         taxAmount,
         total
     }
+}
+
+export const formatDate = (dateStr) => {
+    if (!dateStr) {
+        return "N/A";
+    }
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    });
 };
 
 export { formatInvoiceData };

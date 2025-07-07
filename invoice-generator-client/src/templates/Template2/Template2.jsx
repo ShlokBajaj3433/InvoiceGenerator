@@ -1,190 +1,146 @@
-import React from "react";
-import { Phone } from "lucide-react";
 import './Template2.css';
 
-/**
- * Template2 expects a prop named `data` (like Template1).
- * This fix ensures all fields are read from `data`.
- */
 const Template2 = ({ data }) => {
-  // Defensive fallback for missing data
-  if (!data) return <div>No invoice data provided.</div>;
+    const currencySymbol = "₹";
 
-  // Calculate subtotal, tax, total if not provided (for robustness)
-  const subtotal =
-    typeof data.subtotal === "number"
-      ? data.subtotal
-      : Array.isArray(data.items)
-      ? data.items.reduce((sum, item) => sum + (item.qty * item.unitPrice), 0)
-      : 0;
-  const taxRate = data.taxRate ?? data.tax ?? 0;
-  const taxAmount =
-    typeof data.taxAmount === "number"
-      ? data.taxAmount
-      : (subtotal * taxRate) / 100;
-  const total =
-    typeof data.total === "number"
-      ? data.total
-      : subtotal + taxAmount;
+    // Calculate totals safely
+    const subtotal = Array.isArray(data.items)
+        ? data.items.reduce((acc, item) => acc + (Number(item.quantity) * Number(item.price)), 0)
+        : 0;
 
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 font-sans antialiased">
-      <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden" style={{ maxWidth: "850px" }}>
-        <div className="p-8">
-          {/* Header Section */}
-          <div className="mb-6 text-center">
-            <div className="text-gray-600 text-4xl sm:text-5xl font-bold mb-2">
-              {data.title || "INVOICE"}
-            </div>
-            <div className="text-gray-800 text-lg font-medium">
-              ID: #{data.invoiceNumber}
-            </div>
-          </div>
-          <hr className="my-4 border-gray-200" />
+    const taxAmount = subtotal * (Number(data.tax) / 100);
+    const total = subtotal + taxAmount;
 
-          {/* Company Logo/Name Section */}
-          <div className="text-center mb-8">
-            {data.companyLogo && (
-              <div className="flex justify-center mb-2">
-                <img src={data.companyLogo} alt="Logo" className="footer-logo" />
-              </div>
-            )}
-            <div className="text-5xl font-extrabold text-blue-600 mb-2">
-              {data.companyName}
-            </div>
-            <p className="text-sm text-gray-600">{data.companyAddress}</p>
-            <p className="text-sm text-gray-600 flex items-center justify-center mt-1">
-              <Phone className="w-3 h-3 mr-1 text-gray-500" /> {data.companyPhone}
-            </p>
-          </div>
+    return (
+        <div className="invoice-container">
+            {/* ---------- Invoice Header ---------- */}
+            <div className="invoice-header p-4">
+                <div className="company-info">
+                    {data.logo && (
+                        <div style={{ marginBottom: '10px' }}>
+                            <img src={data.logo} alt="Company logo" width={98} />
+                        </div>
+                    )}
+                    <h2>{data.company?.name || "Company Name"}</h2>
+                    <p>{data.company?.address || "Company Address"}</p>
+                    <p>Phone: {data.company?.phone  }</p>
+                </div>
 
-          {/* Invoice and Bill To Section */}
-          <div className="flex flex-col sm:flex-row justify-between mb-8">
-            <div className="w-full sm:w-1/2 mb-6 sm:mb-0">
-              <h3 className="text-gray-600 text-lg font-semibold mb-2">Bill To:</h3>
-              <ul className="text-gray-700 text-base space-y-1">
-                <li><span className="text-blue-600 font-semibold">{data.billingName}</span></li>
-                <li>{data.billingAddress}</li>
-                <li><Phone className="w-3 h-3 inline-block mr-1 text-gray-500" /> {data.billingPhone}</li>
-              </ul>
+                <div>
+                    <h1 className="invoice-title">{data.title || "Invoice"}</h1>
+                </div>
             </div>
-            <div className="w-full sm:w-1/2 text-left sm:text-right">
-              <h3 className="text-gray-600 text-lg font-semibold mb-2">Invoice Details:</h3>
-              <ul className="text-gray-700 text-base space-y-1">
-                <li>
-                  <span className="font-bold">ID:</span> #{data.invoiceNumber}
-                </li>
-                <li>
-                  <span className="font-bold">Creation Date: </span>{data.invoiceDate}
-                </li>
-                {data.dueDate && (
-                  <li>
-                    <span className="font-bold">Due Date: </span>{data.dueDate}
-                  </li>
-                )}
-                {data.paymentDate && (
-                  <li>
-                    <span className="font-bold">Payment Date: </span>{data.paymentDate}
-                  </li>
-                )}
-                <li>
-                  <span className="font-bold">Status:</span>
-                  <span className={`ml-2 px-2 py-1 rounded-full text-sm font-semibold
-                    ${data.invoiceStatus === 'Unpaid' ? 'bg-green-100 text-green-800' :
-                      data.invoiceStatus === 'Due' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-orange-100 text-orange-800'}`}>
-                    {data.invoiceStatus || "Paid"}
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
 
-          {/* Items Table */}
-          <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm mb-4">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-blue-600 text-white">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider rounded-tl-lg">
-                    #
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                    Description
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                    Qty
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                    Unit Price
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider rounded-tr-lg">
-                    Amount
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {Array.isArray(data.items) && data.items.length > 0 ? (
-                  data.items.map((item, index) => (
-                    <tr key={item.id || index}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                        {item.description}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                        {item.qty ?? item.Qty}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                        {data.currencySymbol}{(item.unitPrice ?? item.Price)?.toFixed(2)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                        {data.currencySymbol}{((item.qty ?? item.Qty) * (item.unitPrice ?? item.Price)).toFixed(2)}
-                      </td>
+            {/* ---------- Invoice Details ---------- */}
+            <div className="invoice-details">
+                <div className="invoice-meta">
+                    <p><strong>Invoice#</strong>: {data.invoice?.number  }</p>
+                    <p><strong>Invoice Date</strong>: {data.invoice?.date  }</p>
+                    <p><strong>Terms</strong>: {data.invoice?.terms || "Due on Receipt"}</p>
+                    <p><strong>Due Date</strong>: {data.invoice?.dueDate  }</p>
+                    <p><strong>Payment Date</strong>: {data.invoice?.paymentDate  }</p>
+                </div>
+                <div></div>
+            </div>
+
+            {/* ---------- Billing and Shipping ---------- */}
+            <div className="billing-shipping">
+                <div className="bill-to">
+                    <h3>Bill To</h3>
+                    <p><strong>{data.billing?.name || "Billing Name"}</strong></p>
+                    <p>{data.billing?.address || "Billing Address"}</p>
+                    <p>{data.billing?.phone  }</p>
+                    <p>{data.billing?.email  }</p>
+                </div>
+                <div className="ship-to">
+                    <h3>Ship To</h3>
+                    <p><strong>{data.shipping?.name || "Shipping Name"}</strong></p>
+                    <p>{data.shipping?.address || "Shipping Address"}</p>
+                    <p>{data.shipping?.phone  }</p>
+                    <p>{data.shipping?.email  }</p>
+                </div>
+            </div>
+
+            {/* ---------- Items Section ---------- */}
+            <table className="items-table">
+                <thead>
+                    <tr>
+                        <th className="item-number">#</th>
+                        <th className="item-description">Item & Description</th>
+                        <th className="item-qty">Qty</th>
+                        <th className="item-rate">Rate</th>
+                        <th className="item-amount">Amount</th>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={5} className="text-center py-4 text-gray-400">No items</td>
-                  </tr>
-                )}
-              </tbody>
+                </thead>
+                <tbody>
+                    {Array.isArray(data.items) && data.items.length > 0 ? (
+                        data.items.map((item, index) => (
+                            <tr key={index}>
+                                <td className="item-number">{index + 1}</td>
+                                <td className="item-description">
+                                    <div className="item-name">{item.name || "Item"}</div>
+                                    <div className="item-desc">{item.description || "Description"}</div>
+                                </td>
+                                <td className="item-qty">{item.quantity || 0}.00 Piece</td>
+                                <td className="item-rate">{currencySymbol}{Number(item.price || 0).toFixed(2)}</td>
+                                <td className="item-amount">{currencySymbol}{(item.total ?? (Number(item.quantity || 0) * Number(item.price || 0))).toFixed(2)}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={5} className="text-center">No items added</td>
+                        </tr>
+                    )}
+                </tbody>
             </table>
-          </div>
 
-          {/* Notes and Totals Section */}
-          <div className="flex flex-col sm:flex-row justify-between mb-8">
-            <div className="w-full sm:w-2/3 mb-6 sm:mb-0">
-              <p className="text-gray-600 text-sm italic">
-                {data.notes?.content || data.notes || ""}
-              </p>
+            {/* ---------- Totals Section ---------- */}
+            <div className="totals-section">
+
+            {/* ---------- Bank Account Details ---------- */}
+            {data.account && (
+                <div >
+                    <h4>Bank Account Details</h4>
+                    <p><strong>Account Name:</strong> {data.account.accountName  }</p>
+                    <p><strong>Account Number:</strong> {data.account.accountNumber  }</p>
+                    <p><strong>IFSC Code:</strong> {data.account.ifscCode  }</p>
+                </div>
+            )}
+                
+                <div className="totals-box2">
+                    <div className="total-row">
+                        <span>Sub Total</span>
+                        <span>{currencySymbol}{subtotal.toFixed(2)}</span>
+                    </div>
+                    <div className="total-row">
+                        <span>Tax Rate</span>
+                        <span>{data.tax || 0}%</span>
+                    </div>
+                    <div className="total-row final-total">
+                        <span>Total</span>
+                        <span>{currencySymbol}{total.toFixed(2)}</span>
+                    </div>
+                    <div className="balance-due">
+                        <div className="total-row">
+                            <span>Balance Due</span>
+                            <span>{currencySymbol}{total.toFixed(2)}</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div className="w-full sm:w-1/3 flex flex-col items-end space-y-2">
-              <div className="flex justify-between w-full text-gray-700 text-base">
-                <span className="font-semibold">SubTotal</span>
-                <span>{data.currencySymbol}{subtotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between w-full text-gray-700 text-base">
-                <span className="font-semibold">Tax ({taxRate}%)</span>
-                <span>{data.currencySymbol}{taxAmount.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between w-full text-gray-900 text-2xl font-bold mt-4 pt-2 border-t border-gray-200">
-                <span>Total Amount</span>
-                <span>{data.currencySymbol}{total.toFixed(2)}</span>
-              </div>
+
+            {/* ---------- Notes Section ---------- */}
+            <div style={{padding: '40px', borderTop: '1px solid #ddd' }}>
+                <p>{data.notes }</p>
+                              <div className="thanks-terms">
+                    <h4 className='text-center'>Thanks for your business.</h4>
+                    <h4>Terms & Conditions</h4>
+                    <p >Full payment is due upon receipt of this invoice. Late payments may incur additional charges or interest as per the applicable laws.</p>
+                </div>
             </div>
-          </div>
-
-          <hr className="my-6 border-gray-200" />
-
-          {/* Footer Section */}
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-gray-600 text-sm mb-4 sm:mb-0">Thank you for your purchase</p>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Template2;

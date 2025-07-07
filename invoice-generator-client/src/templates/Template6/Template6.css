@@ -1,0 +1,386 @@
+
+.template6 {
+  width: 800px;
+  margin: 0 auto;
+  background: white;
+  font-family: 'Arial', sans-serif;
+  padding: 40px;
+  border: 2px solid #000;
+}
+
+/* Header Section */
+.invoice-header6 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  border-bottom: none;
+  background: transparent;
+  color: black;
+  padding: 0;
+}
+
+.company-section6 {
+  flex: 1;
+}
+
+.logo-placeholder {
+  font-weight: bold;
+  font-size: 18px;
+  display: inline-block;
+  text-align: center;
+}
+
+.invoice-title {
+  font-size: 64px;
+  font-weight: bold;
+  margin: 0;
+  letter-spacing: 2px;
+  color: black;
+}
+
+.invoice-details6 {
+  background: black;
+  color: white;
+  padding: 8px 16px;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.invoice-details6 p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+.invoice-details6 p span {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+
+.company-name6 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px 0 5px 0;
+  color: black;
+  font-style: italic;
+}
+
+.company-details p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Invoice Content */
+.invoice-content {
+  padding: 0;
+}
+
+/* Billing Section */
+.billing-section {
+  margin-bottom: 30px;
+}
+
+.billing-header {
+  background: black;
+  color: white;
+  padding: 8px 16px;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.billing-header h5 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  flex: 1;
+}
+
+.billing-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid black;
+  border-top: none;
+}
+
+.billing-info {
+  padding: 15px;
+  border-right: 1px solid black;
+}
+
+.billing-info:last-child {
+  border-right: none;
+}
+
+.billing-info h5 {
+  display: none;
+}
+
+.billing-info p {
+  margin: 3px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Items Table */
+.items-section {
+  margin-bottom: 30px;
+}
+
+.items-section h5 {
+  display: none;
+}
+
+.items-table6 {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.items-table6 thead {
+  background: black;
+  color: white;
+}
+
+.items-table6 th {
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-right: 1px solid white;
+}
+
+.items-table6 th:last-child {
+  border-right: none;
+  text-align: right;
+}
+
+.items-table6 td {
+  padding: 15px 12px;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  font-size: 14px;
+  color: #333;
+}
+
+.items-table6 td:last-child {
+  border-right: none;
+  text-align: right;
+}
+
+.items-table6 tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Bottom Section */
+.bottom-section {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.notes-section {
+  flex: 1;
+}
+
+.notes-header {
+  background: black;
+  color: white;
+  padding: 8px 16px;
+  margin-bottom: 0;
+}
+
+.notes-header h5 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.notes-content {
+  border: 1px solid black;
+  border-top: none;
+  padding: 20px 16px;
+  min-height: 120px;
+}
+
+.notes-content p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Totals Section */
+.totals-section6 {
+  margin: 0;
+  display: block;
+  min-width: 250px;
+}
+
+.totals-box6 {
+  background: white;
+  border: 1px solid black;
+  padding: 0;
+}
+
+.total-row6 {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.total-row6:last-child {
+  border-bottom: none;
+}
+/* Billing Section - Unique for Template6 */
+.billing-section6 {
+  margin-bottom: 30px;
+  border: 1px solid #000;
+  border-top: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.billing-header6 {
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.billing-header6 h5 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: bold;
+  flex: 1;
+  letter-spacing: 1px;
+}
+
+.billing-content6 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+}
+
+.billing-info6 {
+  padding: 16px 18px 16px 18px;
+  border-right: 1px solid #000;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.billing-info6:last-child {
+  border-right: none;
+}
+
+.billing-name6 {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0 0 6px 0;
+  color: #222;
+}
+
+.billing-address6 {
+  margin: 0 0 2px 0;
+  font-size: 15px;
+  color: #222;
+  font-weight: normal;
+}
+
+@media (max-width: 768px) {
+  .billing-content6 {
+    grid-template-columns: 1fr;
+  }
+  .billing-info6 {
+    border-right: none;
+    border-bottom: 1px solid #000;
+  }
+  .billing-info6:last-child {
+    border-bottom: none;
+  }
+}
+.grand-total6 {
+  background: black;
+  color: white;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Thank you message */
+.thank-you {
+  text-align: center;
+  margin: 40px 0 20px 0;
+  padding: 0;
+  background: transparent;
+  color: #999;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* Payment Info - Hide for this design */
+.payment-info {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .template6 {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .invoice-header6 {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .invoice-title {
+    font-size: 48px;
+    margin-top: 20px;
+  }
+  
+  .billing-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .billing-info {
+    border-right: none;
+    border-bottom: 1px solid black;
+  }
+  
+  .billing-info:last-child {
+    border-bottom: none;
+  }
+  
+  .bottom-section {
+    flex-direction: column;
+  }
+  
+  .items-table6 {
+    font-size: 12px;
+  }
+  
+  .items-table6 th,
+  .items-table6 td {
+    padding: 8px 6px;
+  }
+}
