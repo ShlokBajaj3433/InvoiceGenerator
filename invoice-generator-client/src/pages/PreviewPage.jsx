@@ -10,8 +10,7 @@ import html2canvas from 'html2canvas';
 import { uploadInvoiceThumbnail } from '../service/ColudnaryService.js';
 import { useLocation } from 'react-router-dom';
 import { generatePDFfromElement } from '../util/pdfUtil.js';
-
-
+import { useUser } from '@clerk/clerk-react';
 
 function PreviewPage() {
   const previewRef = React.useRef();
@@ -23,7 +22,9 @@ function PreviewPage() {
   const [showModal, setShowModal] = useState(false);
   const [customerEmail, setCustomerEmail] = useState("");
   const [Emaling, setEmaling] = useState(false)
-  
+  const {getToken} = userAuth();
+  const {user} = useUser()
+
   const handleSaveAndExit = async () => {
     // Declaring variables in the top-level scope of the function
     let imageData = null;
@@ -63,10 +64,10 @@ function PreviewPage() {
         imageData = canvas.toDataURL("image/png");
 
         const thumbnailUrl = await uploadInvoiceThumbnail(imageData);
-        const payload = { ...InvoiceData, template, tax: Number(InvoiceData.tax), thumbnailUrl: typeof thumbnailUrl === "object" ? thumbnailUrl.secure_url || thumbnailUrl.url : thumbnailUrl };
-        console.log("Payload being sent to backend:", payload);
-        console.log("thumbnailUrl:", thumbnailUrl);
-        const response = await saveInvoice(baseURL, payload);
+        const payload = { ...InvoiceData, template,clerkId: user.id, tax: Number(InvoiceData.tax), thumbnailUrl: typeof thumbnailUrl === "object" ? thumbnailUrl.secure_url || thumbnailUrl.url : thumbnailUrl };
+        const token = await getToken()
+        
+        const response = await saveInvoice(baseURL, payload, token);
 
         
 
@@ -90,7 +91,8 @@ function PreviewPage() {
   const handleDelete =async ()=>{
 
     try {
-      const response = await deleteInvoice(baseURL, InvoiceData.id)
+      const token = await getToken()
+      const response = await deleteInvoice(baseURL, InvoiceData.id,token)
       if (response.status === 204) {
         
       toast.success("Invoice deleted successfully.");
@@ -128,8 +130,8 @@ const handelSendEmail = async () => {
     const formdata = new FormData();
     formdata.append("file", pdfFile); // <-- use pdfFile
     formdata.append("email", customerEmail);
-
-    const response = await sendInvoice(baseURL, formdata);
+    const token = await getToken()
+    const response = await sendInvoice(baseURL, formdata, token);
     if (response.status === 200) {
       toast.success("Invoice sent successfully.");
       setShowModal(false);
@@ -142,6 +144,16 @@ const handelSendEmail = async () => {
     setEmaling(false);
   }
 }
+
+
+useEffect(() => {
+  if(!InvoiceData){
+    toast.error(   "Invoice data not found. Please go back to the generate page and fill the form.")
+    navigate("/dashboard")
+  }
+
+}, [InvoiceData,navigate])
+
      
   return (
     <div className='container-fluid min-vh-100 p-3'>

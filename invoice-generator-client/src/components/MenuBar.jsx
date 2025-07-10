@@ -1,15 +1,35 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import { assets } from './../assets/assets';
+import { useClerk } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { InitialInvoiceData } from '../context/Appcontext';
+import { AppContext } from './../context/Appcontext';
 
 function MenuBar() {
+  const {openSignIn,} = useClerk()
+  const {setInvoiceData, setInvoicetitle, Settemplate} = useContext(AppContext)
+  const  navigate = useNavigate()
+
+  const openLogin = () => {
+    openSignIn({});
+  }
+
+  const handleGenerateClicked = () => {
+    setInvoiceData(InitialInvoiceData);
+    setInvoicetitle("New Invoice");
+    Settemplate("template1");
+    navigate("/generate");
+  };
+
+
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top'>
       <div className="container pd-2 d-flex justify-content-between align-items-center">
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <Logo />
-          <span className='ms-2 fw-bold fs-4' style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '0.5px', color: '#0D6EFDB2' }}>
+          <span className='ms-2 fw-bold fs-4' style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '0.5px', color: '#0D6EFDB2' }} onClick={handleGenerateClicked}>
             Invoice Generator
           </span>
         </Link>
@@ -31,14 +51,10 @@ function MenuBar() {
                 Home
               </Link>
             </li>
-            <li className='nav-item'>
+              <SignedIn>
+              <li className='nav-item'>
               <Link className='nav-link' aria-current='page' to='/Dashboard'>
                 Dashboard
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link className='nav-link' to='/CreateInvoice'>
-                Create Invoice
               </Link>
             </li>
             <li className='nav-item'>
@@ -46,14 +62,16 @@ function MenuBar() {
                 Generate Invoice
               </Link>
             </li>
-
+            <UserButton/>
+              </SignedIn>
+              <SignedOut>
+                
             <li className='nav-item '>
-              <button className='btn btn-primary rounded-pill px-4 fw-medium' >
+              <button className='btn btn-primary rounded-pill px-4 fw-medium' onClick={() => openLogin()} >
                 Login / Sign Up
               </button>
             </li>
-           
-            
+              </SignedOut>
           </ul>
 
         </div>

@@ -23,12 +23,12 @@ public class InvoiceService {
         return invoiceRepository.save(invoice);
     }
 
-    public List<Invoice> fetchInvoices(){
-        return invoiceRepository.findAll();
+    public List<Invoice> fetchInvoices(String clerkId){
+        return invoiceRepository.findByClerkId(clerkId);
     }
 
-public void deleteInvoice(String invoiceId){
-    Invoice existInvoice = invoiceRepository.findById(invoiceId)
+public void deleteInvoice(String invoiceId, String clerkId){
+    Invoice existInvoice = invoiceRepository.findByIdAndClerkId(invoiceId, clerkId)
         .orElseThrow(() -> new RuntimeException("Invoice with id " + invoiceId + " does not exist"));
     invoiceRepository.delete(existInvoice);
 }

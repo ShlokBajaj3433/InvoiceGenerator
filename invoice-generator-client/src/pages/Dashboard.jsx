@@ -10,12 +10,13 @@ import { Plus } from 'lucide-react';
 
 import { formatDate } from './../util/formatInvoiceData';
 import { useNavigate } from 'react-router-dom';
+import {useAuth} from '@clerk/clerk-react';
 
 
 
 
 
-function dashboard() {
+function Dashboard() {
 
      const [Invoices, setInvoices] = useState([])
  const {baseURL,Settemplate,setInvoiceData,setInvoicetitle} = useContext(AppContext)
@@ -25,7 +26,8 @@ const navigate = useNavigate()
     useEffect(() => {
       const Fetchinvoices = async () => {
         try {
-          const response = await getAllInvoice(baseURL);
+          const token = await getToken()
+          const response = await getAllInvoice(baseURL,token);
           console.log("Fetched invoices:", response.data);
           let invoicesArray = [];
           if (Array.isArray(response.data)) {
@@ -93,7 +95,7 @@ const navigate = useNavigate()
                                               <div className='card-body'>
                                                 <h6 className="card-title md-1">{invoice.title}</h6>
                                                 <small className='text-muted'>
-                                                  Last Updated: {formatDate(invoice.lastUpdatedAt)}
+                                                  Created At: {formatDate(invoice.createdAt)}
                                                 </small>
                                               </div>
                                             </div>
@@ -106,9 +108,9 @@ const navigate = useNavigate()
 
                          );
 
-                    }
+                    } 
 
-                    export default dashboard;
+                    export default Dashboard;
 
 
 

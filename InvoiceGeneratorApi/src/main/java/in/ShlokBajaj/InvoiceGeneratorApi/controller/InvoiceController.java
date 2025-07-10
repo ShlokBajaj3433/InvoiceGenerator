@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import in.ShlokBajaj.InvoiceGeneratorApi.entity.Invoice;
 import in.ShlokBajaj.InvoiceGeneratorApi.service.EmailService;
 import in.ShlokBajaj.InvoiceGeneratorApi.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,8 +36,8 @@ public class InvoiceController {
     }
 
     @GetMapping()
-    public ResponseEntity <List<Invoice>> fetchInvoices(){
-        return ResponseEntity.ok(invoiceService.fetchInvoices());
+    public ResponseEntity <List<Invoice>> fetchInvoices(Authentication authentication){
+        return ResponseEntity.ok(invoiceService.fetchInvoices(authentication.getName()));
     }
 
     @PostMapping("/sendInvoice")
@@ -52,9 +52,14 @@ public class InvoiceController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteInvoice(@PathVariable String id){
-        invoiceService.deleteInvoice(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteInvoice(@PathVariable String id, Authentication authentication){
+        if (authentication.getName() !=  null) {
+            
+            invoiceService.deleteInvoice(id, authentication.getName());
+            return ResponseEntity.noContent().build();
+        }
+        throw new RuntimeException("Authentication required to delete invoice");
+        
     }
     
     

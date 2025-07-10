@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-InvoiceGeneratorApiApplication<InvoiceGeneratorApi>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "in.ShlokBajaj.InvoiceGeneratorApi.InvoiceGeneratorApiApplication",
+            "projectName": "InvoiceGeneratorApi",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
