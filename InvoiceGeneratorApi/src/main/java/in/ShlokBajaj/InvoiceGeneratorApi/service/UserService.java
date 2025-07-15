@@ -16,9 +16,6 @@ public class UserService {
         return userReporitoty.findByClerkUserId(clerkUserId);
     }
 
-    public User saveUser(User user){
-        return userReporitoty.save(user);
-    }
 
 
     public void deleteUser(String id){
@@ -31,6 +28,17 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User with id " + id + " does not exist"));
     }
     
+                public User saveOrUpdateUser(User user) {
+            User existingUser = userReporitoty.findByClerkUserId(user.getClerkUserId());
+            if (existingUser != null) {
+                existingUser.setEmail(user.getEmail());
+                existingUser.setFirstName(user.getFirstName());
+                existingUser.setLastName(user.getLastName());
+                existingUser.setPhotoUrl(user.getPhotoUrl());
+                return userReporitoty.save(existingUser);
+            }
+            return userReporitoty.save(user);
+        }
 
 
 

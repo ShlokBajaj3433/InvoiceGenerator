@@ -16,13 +16,13 @@ function UserSyncHandler() {
             }
                 try {
                     const token = await getToken();
-                    const userData = {
-                            clerkId: user.id,
-                            email: user.primaryEmailAddress.emailAddress,
-                            firstName: user.firstName,
-                            lastName: user.lastName,
-                            image: user.imageUrl
-                        }
+                     const userData = {
+                        clerkUserId: user.id, 
+                        email: user.primaryEmailAddress.emailAddress,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        photoUrl: user.imageUrl 
+                    }
                         await axios.post(BaseURL+"/users",userData,{
                             headers: {
                                 Authorization: `Bearer ${token}`,
