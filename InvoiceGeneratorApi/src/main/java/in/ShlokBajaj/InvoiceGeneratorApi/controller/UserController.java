@@ -15,7 +15,6 @@ public class UserController {
     private UserService userService;
 
 
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public User createOrUpdateUser(@RequestBody User user, Authentication authentication) {
